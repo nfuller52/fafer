@@ -30,6 +30,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'brakeman'
   gem 'bullet'
+  gem 'coveralls', require: false
 end
 
 group :test do
