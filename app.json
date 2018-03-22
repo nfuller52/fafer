@@ -4,10 +4,10 @@
   "formation": {},
   "env": {},
   "environments": {
-    "env": {
-      "GIT_DISCOVERY_ACROSS_FILESYSTEM": "../"
-    },
     "test": {
+      "env": {
+        "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
+      },
       "addons": [
         "heroku-postgresql"
       ],
