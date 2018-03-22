@@ -1,6 +1,13 @@
 {
+  "name": "fafer",
+  "buildpacks": [],
+  "formation": {},
+  "env": {},
   "environments": {
     "test": {
+      "addons": [
+        "heroku-postgresql"
+      ],
       "scripts": {
         "test": "rake ci:test"
       }
