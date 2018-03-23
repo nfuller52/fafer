@@ -12,11 +12,20 @@
 
 ActiveRecord::Schema.define(version: 20180321183639) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "job_posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "allow_remote", default: 0, null: false
+    t.string "location", null: false
+    t.string "description", null: false
+    t.string "contact", null: false
+    t.date "publish_on", null: false
+    t.integer "company_id", null: false
+    t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  enable_extension "plpgsql"
 
 end
