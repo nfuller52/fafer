@@ -16,6 +16,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'awesome_print'
 gem 'rollbar'
 gem 'pg'
+gem 'data_migrate'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
