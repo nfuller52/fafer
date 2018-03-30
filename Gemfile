@@ -17,6 +17,8 @@ gem 'awesome_print'
 gem 'rollbar'
 gem 'pg'
 gem 'data_migrate'
+gem 'bootstrap', '~> 4.0.0'
+gem 'jquery-rails'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
