@@ -19,6 +19,7 @@ gem 'pg'
 gem 'data_migrate'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'friendly_id', '~> 5.1.0'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
@@ -29,6 +30,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'bullet'
   gem 'coveralls', require: false
+  gem 'faker'
 end
 
 group :test do

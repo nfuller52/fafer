@@ -1,4 +1,7 @@
 class JobListing < ApplicationRecord
+  extend FriendlyId
+  friendly_id :company_listing, use: :slugged
+
   PLATFORM_TITLES = { net_suite: "NetSuite", oracle: "Oracle", sap: "SAP" }
 
   enum platform: { net_suite: 0, oracle: 1, sap: 2 }
@@ -12,5 +15,11 @@ class JobListing < ApplicationRecord
 
   def erp
     PLATFORM_TITLES[platform.try(:to_sym)]
+  end
+
+  private
+
+  def company_listing
+    [company, title].join(' ')
   end
 end
