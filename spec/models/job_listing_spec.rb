@@ -22,6 +22,36 @@ RSpec.describe JobListing, type: :model do
     end
   end
 
+  describe "scopes" do
+    describe "#published" do
+      let(:job_listing) { create(:job_listing) }
+
+      subject { described_class.published }
+
+      context "when a job listing is published within the last month" do
+        it "is included" do
+          expect(subject).to include(job_listing)
+        end
+      end
+
+      context "when a job listing is published more than a month ago" do
+        let(:job_listing) { create(:expired_job_listing) }
+
+        it "is not included" do
+          expect(subject).not_to include(job_listing)
+        end
+      end
+
+      context "when a job listing is published in the future" do
+        let(:job_listing) { create(:future_job_listing) }
+
+        it "is not included" do
+          expect(subject).not_to include(job_listing)
+        end
+      end
+    end
+  end
+
   describe "#erp" do
     let(:job_listing) { described_class.new(platform: platform) }
     let(:platform) { "net_suite" }
