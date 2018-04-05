@@ -7,7 +7,7 @@ class CreateJobListings < ActiveRecord::Migration[5.1]
       t.string :location, null: false
       t.text :description, null: false
       t.string :slug, null: false, index: true
-      t.string :company, null: false, index: true
+      t.string :company, null: false
       t.string :contact, null: false
       t.datetime :publish_on, null: false, default: DateTime.current
       t.timestamps
