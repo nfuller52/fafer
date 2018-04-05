@@ -60,8 +60,8 @@ RSpec.describe JobListingsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       before do
-        allow(JobListing).to receive(:friendly).and_return([])
-        # allow(ActiveRecord::Association).to receive(:find)
+        allow(JobListing).to receive(:friendly).and_return(ActiveRecord::Relation.new)
+        allow(ActiveRecord::Relation).to receive(:find).and_return(build(:job_listing))
         allow_any_instance_of(JobListing).to receive(:save).and_return(true)
       end
 
