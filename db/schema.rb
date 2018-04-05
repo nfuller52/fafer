@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180331181029) do
     t.string "slug", null: false
     t.string "company", null: false
     t.string "contact", null: false
-    t.datetime "publish_at", default: "2018-04-03 00:46:44", null: false
+    t.datetime "publish_on", default: "2018-04-05 07:24:25", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["allow_remote"], name: "index_job_listings_on_allow_remote"

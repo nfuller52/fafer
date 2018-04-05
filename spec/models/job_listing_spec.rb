@@ -5,13 +5,13 @@ RSpec.describe JobListing, type: :model do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:location) }
     it { should validate_presence_of(:description) }
-    it { should validate_presence_of(:publish_at) }
+    it { should validate_presence_of(:publish_on) }
     it { should validate_presence_of(:company) }
     it { should validate_presence_of(:contact) }
 
-    describe "publish_date" do
+    describe "publish_on" do
       it "should default to today" do
-        expect(described_class.new.publish_at.to_date).to eq(Time.now.to_date)
+        expect(described_class.new.publish_on.to_date).to eq(DateTime.current.to_date)
       end
     end
 
