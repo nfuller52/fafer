@@ -13,6 +13,13 @@ RSpec.describe JobListing, type: :model do
       it "should default to today" do
         expect(described_class.new.publish_on.to_date).to eq(DateTime.current.to_date)
       end
+
+      it "does not over write a value if provided" do
+        publish_time = DateTime.current + 3.days
+        job_listing = create(:job_listing, publish_on: publish_time)
+
+        expect(job_listing.publish_on).to eq(publish_time)
+      end
     end
 
     describe "platform" do
