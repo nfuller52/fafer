@@ -8,7 +8,9 @@ unless Rails.env.production? || Rails.env.staging?
     desc 'Reset and seed the database'
     task reset: ["db:migrate:reset", "db:seed"]
 
-    desc 'Run test suite'
-    task test: [:spec]
+    namespace :ci do
+      desc 'Run test suite'
+      task tests: [:spec]
+    end
   end
 end
