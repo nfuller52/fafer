@@ -6,7 +6,8 @@
   "environments": {
     "test": {
       "env": {
-        "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
+        "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1",
+        "CI": "true"
       },
       "addons": [
         "heroku-postgresql"

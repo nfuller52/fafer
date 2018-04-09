@@ -13,6 +13,8 @@ ruby_filename="coverage/codeclimate.rb.json"
 bundle exec rake spec
 brakeman -o brakeman.json -f codeclimate
 
+ls -la ./coverage/
+
 # format ruby coverage
 ./cc-test-reporter format-coverage --output $ruby_filename
 
