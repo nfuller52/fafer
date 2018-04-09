@@ -6,12 +6,14 @@
   "environments": {
     "test": {
       "env": {
-        "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
+        "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1",
+        "CC_TEST_REPORTER_ID": "4d88346ddef32a36392c7dc889d9833e01cd0873762a7882e408d5d24b6e9c33"
       },
       "addons": [
         "heroku-postgresql"
       ],
       "scripts": {
+        "test-setup": "./script/ci_setup",
         "test": "rake fafer:ci:tests"
       }
     }
