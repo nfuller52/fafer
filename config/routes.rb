@@ -1,3 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root to: "listings#index"
+
+  get "/net-suite", to: "listings#net_suite"
+  get "/sap", to: "listings#sap"
+  get "/oracle", to: "listings#oracle"
+
+  resources :listings, path: "/", only: [:index, :show]
+  resources :job_listings, path: "/job-listings", only: [:new, :edit, :create, :update, :destroy]
 end

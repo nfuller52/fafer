@@ -12,7 +12,7 @@
         "heroku-postgresql"
       ],
       "scripts": {
-        "test": "rake ci:tests"
+        "test": "rake fafer:ci:tests"
       }
     }
   }
