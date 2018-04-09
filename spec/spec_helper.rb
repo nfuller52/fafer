@@ -1,8 +1,6 @@
 # require 'coveralls'
 # Coveralls.wear!
 require "simplecov"
-require "simplecov-console"
-
 SimpleCov.start "rails"
 
 RSpec.configure do |config|
