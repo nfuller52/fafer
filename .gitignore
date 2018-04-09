@@ -22,5 +22,4 @@
 
 .byebug_history
 /.env
-/coverage
 cc-test-reporter
