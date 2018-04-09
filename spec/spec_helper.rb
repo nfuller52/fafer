@@ -1,17 +1,7 @@
 # require 'coveralls'
 # Coveralls.wear!
-if ENV["CI"]
-  require "../codeclimate-test-reporter"
-  SimpleCov.start "rails" do
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
-  end
-else
-  require "simplecov"
-  SimpleCov.start "rails"
-end
+require "simplecov"
+SimpleCov.start "rails"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
