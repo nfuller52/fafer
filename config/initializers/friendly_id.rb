@@ -17,7 +17,7 @@ FriendlyId.defaults do |config|
   config.use :reserved
 
   config.reserved_words = %w(new edit index session login logout users admin
-    stylesheets assets javascripts images)
+    stylesheets assets javascripts images net_suite sap oracle)
 
   #  ## Friendly Finders
   #
@@ -45,7 +45,7 @@ FriendlyId.defaults do |config|
   # Most applications will use the :slugged module everywhere. If you wish
   # to do so, uncomment the following line.
   #
-  # config.use :slugged
+  config.use :slugged
   #
   # By default, FriendlyId's :slugged addon expects the slug column to be named
   # 'slug', but you can change it if you wish.

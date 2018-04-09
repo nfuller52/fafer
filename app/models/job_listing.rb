@@ -1,6 +1,6 @@
 class JobListing < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name
 
   PLATFORM_TITLES = { net_suite: "NetSuite", oracle: "Oracle", sap: "SAP" }
 
