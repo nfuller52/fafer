@@ -1,35 +1,39 @@
 class JobListing < ApplicationRecord
   extend FriendlyId
-  friendly_id :company_listing, use: :slugged
+  friendly_id :name, use: :slugged
 
   PLATFORM_TITLES = { net_suite: "NetSuite", oracle: "Oracle", sap: "SAP" }
-
-  before_create :set_publish_on
 
   enum platform: { net_suite: 0, oracle: 1, sap: 2 }
 
   validates :title, presence: true
   validates :location, presence: true
   validates :description, presence: true
-  validates :publish_on, presence: true
   validates :company, presence: true
   validates :contact, presence: true
 
-  scope :published, -> do
-    where(publish_on: DateTime.current.beginning_of_day - 1.month..DateTime.current.end_of_day)
+  scope :published, -> { where("expiration_date >= ?", Date.current) }
+
+  def self.valid_platform?(platform)
+    JobListing.platforms.keys.include?(platform.to_s)
+  end
+
+  def self.default_platform
+    JobListing.platforms.keys.first
   end
 
   def erp
     PLATFORM_TITLES[platform.try(:to_sym)]
   end
 
-  def set_publish_on
-    publish_on = DateTime.current if publish_on.present?
+  def publish
+    if valid?
+      update(publish_date: Date.current, expiration_date: Date.current + 30.days)
+    end
   end
 
-  private
-
-  def company_listing
-    [company, title].join(' ')
+  def name
+    return false unless company.present? && title.present?
+    [company, title].join(' - ')
   end
 end

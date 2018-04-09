@@ -12,7 +12,8 @@ Seed.start("JobListing") do
         job_listing.location = "#{Faker::Address.city}, #{Faker::Address.state_abbr}"
         job_listing.description = Faker::Markdown.random
         job_listing.contact = Faker::Internet.email
-        job_listing.publish_on = (DateTime.current.last_month...DateTime.current + 1.month).to_a.sample
+        job_listing.publish_date = (DateTime.current.last_month...DateTime.current).to_a.sample
+        job_listing.expiration_date = job_listing.publish_date + 30.days
       end
     end
   end

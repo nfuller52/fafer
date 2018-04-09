@@ -24,10 +24,13 @@ ActiveRecord::Schema.define(version: 20180331181029) do
     t.string "slug", null: false
     t.string "company", null: false
     t.string "contact", null: false
-    t.datetime "publish_on", default: "2018-04-05 17:44:19", null: false
+    t.date "publish_date"
+    t.date "expiration_date"
+    t.boolean "is_published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["allow_remote"], name: "index_job_listings_on_allow_remote"
+    t.index ["expiration_date"], name: "index_job_listings_on_expiration_date"
     t.index ["platform"], name: "index_job_listings_on_platform"
     t.index ["slug"], name: "index_job_listings_on_slug"
   end

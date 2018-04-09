@@ -2,7 +2,8 @@ class JobListingsController < ApplicationController
   before_action :set_job_listing, only: [:edit, :update, :destroy]
 
   def new
-    @job_listing = JobListing.new
+    platform = JobListing.valid_platform?(params[:platform]) ? params[:platform] : JobListing.default_platform
+    @job_listing = JobListing.new(platform: platform)
   end
 
   def edit
@@ -38,6 +39,6 @@ class JobListingsController < ApplicationController
   end
 
   def job_listing_params
-    params.require(:job_listing).permit(:title, :company, :publish_on, :description, :platform, :allow_remote, :contact, :location)
+    params.require(:job_listing).permit(:title, :company, :description, :platform, :allow_remote, :contact, :location)
   end
 end

@@ -3,4 +3,4 @@
 <%= render 'form', job_listing: @job_listing %>
 
 <%= link_to 'Show', listing_path(@job_listing) %> |
-<%= link_to 'Back', listings_path %>
+<%= link_to 'Back', self.send("#{@job_listing.platform}_path") %>

@@ -8,14 +8,12 @@ FactoryBot.define do
     slug "big-business-accounting-professional"
     company "Big Business"
     contact "test@example.com"
-    publish_on { DateTime.current - 1.day }
+    publish_date { Date.current - 7.days }
+    expiration_date { Date.current + 23.days }
 
-    factory :expired_job_listing do
-      publish_on { DateTime.current - 2.months }
-    end
-
-    factory :future_job_listing do
-      publish_on { DateTime.current + 2.months }
+    factory :not_published_job_listing do
+      publish_date nil
+      expiration_date nil
     end
   end
 
@@ -27,6 +25,7 @@ FactoryBot.define do
     description { Faker::Markdown.random }
     company { Faker::Company.name }
     contact { Faker::Internet.email }
-    publish_on { (DateTime.current.last_month...DateTime.current).to_a.sample }
+    publish_date { (Date.current.last_month...Date.current).to_a.sample }
+    expiration_date { (Date.current...Date.current + 1.month).to_a.sample }
   end
 end

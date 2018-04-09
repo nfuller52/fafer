@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe JobListingsController, type: :controller do
   let(:valid_attributes) { attributes_for(:job_listing) }
-  let(:invalid_attributes) { { title: nil, company: "", description: nil } }
+  let(:invalid_attributes) { attributes_for(:job_listing, title: nil) }
 
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}
+
       expect(response).to be_success
     end
   end
@@ -14,9 +15,9 @@ RSpec.describe JobListingsController, type: :controller do
   describe "GET #edit" do
     context "when the job listing exists" do
       it "returns a success response" do
-        allow(JobListing).to receive(:friendly).and_return([build(:job_listing)])
+        job_listing = JobListing.create!(valid_attributes)
 
-        get :edit, params: { id: "valid-id" }
+        get :edit, params: { id: job_listing.slug }
         expect(response).to be_success
       end
     end
@@ -30,28 +31,23 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      before { allow_any_instance_of(JobListing).to receive(:save).and_return(true) }
-
       it "creates a new Listing" do
-        post :create, params: { job_listing: valid_attributes }
-
-        expect(flash[:notice]).to be_present
+        expect {
+          post :create, params: { job_listing: valid_attributes }
+        }.to change(JobListing, :count).by(1)
       end
 
-      it "redirects to the created listing" do
+      it "redirects to the created job listing" do
         post :create, params: { job_listing: valid_attributes }
 
-        expect(response).to have_http_status(:redirect)
-        expect(response.status).to be(302)
-        expect(response).to redirect_to("/" + response.request.parameters["job_listing"]["slug"])
+        expect(response).to redirect_to(listing_path(JobListing.last))
       end
     end
 
     context "with invalid params" do
-      before { allow_any_instance_of(JobListing).to receive(:save).and_return(false) }
-
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { job_listing: invalid_attributes }
+
         expect(response).to be_success
       end
     end
@@ -59,29 +55,35 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      before do
-        allow(JobListing).to receive(:friendly).and_return(ActiveRecord::Relation.new)
-        allow(ActiveRecord::Relation).to receive(:find).and_return(build(:job_listing))
-        allow_any_instance_of(JobListing).to receive(:save).and_return(true)
-      end
+      let(:new_attributes) { attributes_for(:random_job_listing) }
 
       it "updates the requested listing" do
-        put :update, params: { id: "valid-id", job_listing: valid_attributes }
+        job_listing = JobListing.create!(valid_attributes)
+        put :update, params: { id: job_listing.to_param, job_listing: new_attributes }
+        job_listing.reload
 
-        expect(flash[:notice]).to be_present
+        expect(job_listing.title).to eq(new_attributes[:title])
+        expect(job_listing.platform).to eq(new_attributes[:platform])
+        expect(job_listing.allow_remote).to eq(new_attributes[:allow_remote])
+        expect(job_listing.location).to eq(new_attributes[:location])
+        expect(job_listing.description).to eq(new_attributes[:description])
+        expect(job_listing.company).to eq(new_attributes[:company])
+        expect(job_listing.contact).to eq(new_attributes[:contact])
       end
 
       it "redirects to the listing" do
-        listing = JobListing.create! valid_attributes
-        put :update, params: {id: listing.to_param, listing: valid_attributes}
-        expect(response).to redirect_to(listing)
+        job_listing = JobListing.create!(valid_attributes)
+        put :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
+
+        expect(response).to redirect_to(listing_path(job_listing))
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        listing = JobListing.create! valid_attributes
-        put :update, params: {id: listing.to_param, listing: invalid_attributes}
+        job_listing = JobListing.create!(valid_attributes)
+        put :update, params: { id: job_listing.to_param, job_listing: invalid_attributes }
+
         expect(response).to be_success
       end
     end
@@ -89,15 +91,17 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested listing" do
-      listing = JobListing.create! valid_attributes
+      job_listing = JobListing.create!(valid_attributes)
+
       expect {
-        delete :destroy, params: {id: listing.to_param}
+        delete :destroy, params: { id: job_listing.to_param }
       }.to change(JobListing, :count).by(-1)
     end
 
     it "redirects to the listings list" do
-      listing = JobListing.create! valid_attributes
-      delete :destroy, params: {id: listing.to_param}
+      job_listing = JobListing.create!(valid_attributes)
+      delete :destroy, params: { id: job_listing.to_param }
+
       expect(response).to redirect_to(listings_url)
     end
   end

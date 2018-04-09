@@ -8,12 +8,33 @@ RSpec.describe ListingsController, type: :controller do
     end
   end
 
+  describe "GET #net_suite" do
+    it "returns a success response" do
+      get :net_suite, params: {}
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET #sap" do
+    it "returns a success response" do
+      get :sap, params: {}
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET #oracle" do
+    it "returns a success response" do
+      get :oracle, params: {}
+      expect(response).to be_success
+    end
+  end
+
   describe "GET #show" do
     context "when the listing exists" do
       it "returns a success response" do
-        allow(JobListing).to receive(:friendly).and_return([build(:job_listing)])
+        job_listing = create(:job_listing)
+        get :show, params: { id: job_listing.to_param }
 
-        get :show, params: { id: "valid-id" }
         expect(response).to be_success
       end
     end
