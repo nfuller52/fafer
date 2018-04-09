@@ -20,5 +20,8 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+  1. Install the (https://devcenter.heroku.com/articles/heroku-cli)[heroku toolbelt]
+  2. Login with the command `$ heroku login`
+  3.
 
 * ...
