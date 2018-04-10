@@ -18,8 +18,6 @@ brakeman -o brakeman.json -f codeclimate
 # format ruby coverage
 ./cc-test-reporter format-coverage --output $ruby_filename
 
-ls -la ./coverage/
-cat $ruby_filename
-# # sum code coverage and send to codeclimate
+# sum code coverage and send to codeclimate
 ./cc-test-reporter sum-coverage $ruby_filename
 ./cc-test-reporter upload-coverage
