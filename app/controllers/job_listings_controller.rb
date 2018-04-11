@@ -2,8 +2,8 @@ class JobListingsController < ApplicationController
   before_action :set_job_listing, only: [:edit, :update, :destroy]
 
   def new
-    platform = JobListing.valid_platform?(params[:platform]) ? params[:platform] : JobListing.default_platform
-    @job_listing = JobListing.new(platform: platform)
+    @platform_name = params[:platform] if JobListing.valid_platform?(params[:platform])
+    @job_listing = JobListing.new(platform: @platform_name)
   end
 
   def edit

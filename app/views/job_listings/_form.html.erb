@@ -11,7 +11,37 @@
     </div>
   <% end %>
 
+  <div class="form-group row">
+    <%= form.label :title, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :title, class: "form-control", id: "job_listing_title", placeholder: "Job or Postition Title" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :platform, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.collection_select :platform, :platform, JobListing::PLATFORM_TITLES.map { |k, v| [k.to_s, v.to_s] }, :first, "last", prompt: true %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+
+<form>
+  <div class="form-group row">
+    <label for="postTitle" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="postTitle" placeholder="Job or Position Title">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+  </div>
+</form>
