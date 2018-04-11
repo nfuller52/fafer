@@ -8,7 +8,7 @@ RSpec.describe JobListingsController, type: :controller do
     it "returns a success response" do
       get :new, params: {}
 
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -18,7 +18,7 @@ RSpec.describe JobListingsController, type: :controller do
         job_listing = JobListing.create!(valid_attributes)
 
         get :edit, params: { id: job_listing.slug }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe JobListingsController, type: :controller do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { job_listing: invalid_attributes }
 
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
