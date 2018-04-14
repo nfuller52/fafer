@@ -26,10 +26,14 @@ class JobListing < ApplicationRecord
     PLATFORM_TITLES[platform.try(:to_sym)]
   end
 
-  def publish
+  def publish!
     if valid?
       update(publish_date: Date.current, expiration_date: Date.current + 30.days)
     end
+  end
+
+  def published?
+    publish_date.present? && expiration_date.present?
   end
 
   def name

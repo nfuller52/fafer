@@ -1,9 +1,23 @@
 class JobListingsController < ApplicationController
-  before_action :set_job_listing, only: [:edit, :update, :destroy]
+  before_action :set_job_listing, only: [:edit, :update, :destroy, :publish]
 
   def new
     @platform_name = params[:platform] if JobListing.valid_platform?(params[:platform])
-    @job_listing = JobListing.new(platform: @platform_name)
+
+    if Rails.env.development?
+      stubbed_attributes = {
+        company: Faker::Company.name,
+        title: Faker::Job.title,
+        allow_remote: [true, false].sample,
+        location: "#{Faker::Address.city}, #{Faker::Address.state_abbr}",
+        description: Faker::Markdown.random,
+        contact: Faker::Internet.email,
+        platform: @platform_name
+      }
+      @job_listing = JobListing.new(stubbed_attributes)
+    else
+      @job_listing = JobListing.new(platform: @platform_name)
+    end
   end
 
   def edit
@@ -13,9 +27,20 @@ class JobListingsController < ApplicationController
     @job_listing = JobListing.new(job_listing_params)
 
     if @job_listing.valid? && @job_listing.save
-      redirect_to listing_path(@job_listing.slug), notice: "#{@job_listing.title} was created."
+      redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
     else
       render :new
+    end
+  end
+
+  def preview
+  end
+
+  def publish
+    if @job_listing.publish!
+      redirect_to listings_path, notice: "#{@job_listing.title} has been published!"
+    else
+      render :edit
     end
   end
 

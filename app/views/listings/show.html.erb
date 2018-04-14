@@ -1,3 +1,14 @@
+<% if @preview_mode %>
+  <h1>
+    Preview Mode<br>
+    <small>This listing has not been published to the public yet.</small>
+  </h1>
+
+  <%= form_for @listing, html: { class: "form-horizontal" }, url: publish_job_listing_path(@listing), method: :put do |form| %>
+    <%= form.submit "Publish", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <%= link_to 'Edit', edit_job_listing_path(@listing) %> |
