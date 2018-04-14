@@ -1,0 +1,23 @@
+#!/bin/bash
+
+export CI_BUILD_ID="$HEROKU_TEST_RUN_ID"
+export CI_NAME="heroku"
+export GIT_BRANCH="$HEROKU_TEST_RUN_BRANCH"
+export GIT_COMMIT_SHA="$HEROKU_TEST_RUN_COMMIT_VERSION"
+export GIT_COMMITTED_AT="$(date +%s)"
+export CC_TEST_REPORTER_ID="4d88346ddef32a36392c7dc889d9833e01cd0873762a7882e408d5d24b6e9c33"
+
+ruby_filename="coverage/codeclimate.rb.json"
+
+# run the ruby test suite
+bundle exec rake spec
+brakeman -o brakeman.json -f codeclimate
+
+./cc-test-reporter after-build --exist-code $EXIT_CODE
+
+# format ruby coverage
+./cc-test-reporter format-coverage --output $ruby_filename
+
+# sum code coverage and send to codeclimate
+./cc-test-reporter sum-coverage $ruby_filename
+./cc-test-reporter upload-coverage

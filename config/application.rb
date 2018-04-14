@@ -24,7 +24,8 @@ module Fafer
       generate.view_specs false
       generate.helper_specs false
       generate.routing_specs false
-      generate.controller_specs false
+      generate.request_specs false
+      generate.factory_bot false
     end
   end
 end

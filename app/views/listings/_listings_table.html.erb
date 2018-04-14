@@ -1,0 +1,15 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<table class="table table-striped table-borderless">
+  <tbody>
+    <% @listings.each do |listing| %>
+        <tr>
+          <td><%= link_to(listing.name, listing_path(listing)) %></td>
+          <td><%= I18n.l(listing.publish_date, format: :short_date) %></td>
+          <td><%= listing.erp %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

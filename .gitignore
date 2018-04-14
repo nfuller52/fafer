@@ -22,4 +22,9 @@
 
 .byebug_history
 /.env
-/coverage
+cc-test-reporter
+coverage/.last_run.json
+coverage/.resultset.json
+coverage/.resultset.json.lock
+coverage/assets/
+coverage/index.html

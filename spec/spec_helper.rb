@@ -1,5 +1,7 @@
 # require 'coveralls'
 # Coveralls.wear!
+require "simplecov"
+SimpleCov.start "rails"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
