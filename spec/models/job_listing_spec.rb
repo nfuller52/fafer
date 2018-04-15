@@ -134,7 +134,7 @@ RSpec.describe JobListing, type: :model do
       let(:job_listing) { create(:job_listing, publish_date: nil, expiration_date: nil) }
 
       before do
-        job_listing.publish
+        job_listing.publish!
         job_listing.reload
       end
 
@@ -150,7 +150,7 @@ RSpec.describe JobListing, type: :model do
     context "when the record is not valid" do
       let(:job_listing) { build(:job_listing, title: nil, publish_date: nil, expiration_date: nil) }
 
-      before { job_listing.publish }
+      before { job_listing.publish! }
 
       it "does not update the publish date" do
         expect(job_listing.publish_date).to be_nil

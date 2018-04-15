@@ -15,3 +15,33 @@
  */
 
 @import "bootstrap";
+
+a {
+  transition: .5s;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.post-button {
+  padding: 1rem 4rem 1rem 4rem;
+}
+
+.platform-nav-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.platform-nav {
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  &.active {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: grey;
+  }
+}

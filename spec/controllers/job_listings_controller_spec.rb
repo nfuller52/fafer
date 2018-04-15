@@ -37,10 +37,10 @@ RSpec.describe JobListingsController, type: :controller do
         }.to change(JobListing, :count).by(1)
       end
 
-      it "redirects to the created job listing" do
+      it "redirects to the created job listing in preview mode" do
         post :create, params: { job_listing: valid_attributes }
 
-        expect(response).to redirect_to(listing_path(JobListing.last))
+        expect(response).to redirect_to(listing_path(JobListing.last, preview: true))
       end
     end
 

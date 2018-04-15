@@ -11,6 +11,7 @@ class JobListing < ApplicationRecord
   validates :description, presence: true
   validates :company, presence: true
   validates :contact, presence: true
+  validates :platform, presence: true
 
   scope :published, -> { where("expiration_date >= ?", Date.current) }
 
