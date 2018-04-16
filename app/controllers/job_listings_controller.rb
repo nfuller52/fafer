@@ -33,14 +33,6 @@ class JobListingsController < ApplicationController
     end
   end
 
-  def publish
-    if @job_listing.publish!
-      redirect_to listings_path, notice: "#{@job_listing.title} has been published!"
-    else
-      render :edit
-    end
-  end
-
   def update
     if @job_listing.valid? && @job_listing.update(job_listing_params)
       redirect_to listing_path(@job_listing.slug), notice: "#{@job_listing.title} was updated."

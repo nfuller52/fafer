@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   get "/oracle", to: "listings#oracle"
 
   resources :listings, path: "/", only: [:index, :show]
-  resources :job_listings, path: "/job-listings", only: [:new, :edit, :create, :update, :destroy] do
-    member do
-      put "publish"
-    end
-  end
+  resources :publications, only: [:create]
+  resources :job_listings, path: "/job-listings", only: [:new, :edit, :create, :update, :destroy]
 end
