@@ -33,9 +33,6 @@ class JobListingsController < ApplicationController
     end
   end
 
-  def preview
-  end
-
   def publish
     if @job_listing.publish!
       redirect_to listings_path, notice: "#{@job_listing.title} has been published!"
