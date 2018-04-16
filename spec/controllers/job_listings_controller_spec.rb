@@ -84,7 +84,7 @@ RSpec.describe JobListingsController, type: :controller do
         job_listing = JobListing.create!(valid_attributes)
         put :update, params: { id: job_listing.to_param, job_listing: invalid_attributes }
 
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
