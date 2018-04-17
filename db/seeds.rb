@@ -13,7 +13,7 @@ unless Rails.env.production?
   Seed.start("Platform") do
     Seed.step("destroy_all(:platforms)") { Platform.destroy_all }
 
-    platform_names = ["Net Suite", "Oracle", "SAP"]
+    platform_names = ["NetSuite", "Oracle", "SAP"]
     Seed.step("create(:platforms) #{platform_names.length} records") do
       platform_names.each do |platform_name|
         Platform.find_or_create_by(name: platform_name)
