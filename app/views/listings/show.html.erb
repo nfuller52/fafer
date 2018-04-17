@@ -4,7 +4,7 @@
     <small>This listing has not been published to the public yet.</small>
   </h1>
 
-  <%= form_for @listing, html: { class: "form-horizontal" }, url: publish_job_listing_path(@listing), method: :put do |form| %>
+  <%= form_for @listing, html: { class: "form-horizontal" }, url: publications_path(id: @listing), method: :post do |form| %>
     <%= form.submit "Publish", class: "btn btn-primary" %>
   <% end %>
 <% end %>

@@ -5,7 +5,7 @@ class PublicationsController < ApplicationController
     if @job_listing.publish!
       redirect_to listings_path, notice: "#{@job_listing.title} has been published!"
     else
-      render :edit
+      render template: "job_listings/edit"
     end
   end
 end

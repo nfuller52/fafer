@@ -3,6 +3,7 @@ class JobListing < ApplicationRecord
   friendly_id :name
 
   PLATFORM_TITLES = { net_suite: "NetSuite", oracle: "Oracle", sap: "SAP" }
+  PUBLISH_DURATION_IN_DAYS = 30
 
   enum platform: { net_suite: 0, oracle: 1, sap: 2 }
 
@@ -28,9 +29,8 @@ class JobListing < ApplicationRecord
   end
 
   def publish!
-    if valid?
-      update(publish_date: Date.current, expiration_date: Date.current + 30.days)
-    end
+    return false unless valid?
+    update(publish_date: Date.current, expiration_date: Date.current + PUBLISH_DURATION_IN_DAYS.days)
   end
 
   def published?
