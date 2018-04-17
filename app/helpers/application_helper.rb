@@ -1,6 +1,7 @@
 module ApplicationHelper
-  def job_post_button(controller_action: nil)
-    link_to "Post A Job For Only $301", new_job_listing_path, class: "btn btn-success btn-lg post-button"
+  def job_post_button
+    platform_slug = @platform.present? ? @platform.slug : nil
+    link_to "Post A Job For Only $301", new_job_listing_path(platform: platform_slug), class: "btn btn-success btn-lg post-button"
   end
 
   def markdown(text)
