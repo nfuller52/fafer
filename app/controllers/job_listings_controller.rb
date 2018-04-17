@@ -1,5 +1,16 @@
 class JobListingsController < ApplicationController
-  before_action :set_job_listing, only: [:edit, :update, :destroy, :publish]
+  before_action :set_job_listing, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :protect_from_malevolence, only: [:edit, :update, :destroy]
+
+  def index
+    @listings = JobListing.published.order(expiration_date: :desc, id: :desc)
+  end
+
+  def show
+    @listing = JobListing.friendly.find(params[:id])
+
+    @preview_mode = params[:preview] == "true" && !@listing.published? ? true : false
+  end
 
   def new
     @platform_name = params[:platform] if JobListing.valid_platform?(params[:platform])
@@ -27,7 +38,7 @@ class JobListingsController < ApplicationController
     @job_listing = JobListing.new(job_listing_params)
 
     if @job_listing.valid? && @job_listing.save
-      redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
+      redirect_to job_listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
     else
       render :new
     end
@@ -35,7 +46,7 @@ class JobListingsController < ApplicationController
 
   def update
     if @job_listing.valid? && @job_listing.update(job_listing_params)
-      redirect_to listing_path(@job_listing.slug), notice: "#{@job_listing.title} was updated."
+      redirect_to job_listing_path(@job_listing.slug), notice: "#{@job_listing.title} was updated."
     else
       render :edit
     end
@@ -43,7 +54,7 @@ class JobListingsController < ApplicationController
 
   def destroy
     @job_listing.destroy
-    redirect_to listings_url, notice: "#{@job_listing.title} was deleted."
+    redirect_to job_listings_url, notice: "#{@job_listing.title} was deleted."
   end
 
   private
@@ -54,5 +65,10 @@ class JobListingsController < ApplicationController
 
   def job_listing_params
     params.require(:job_listing).permit(:title, :company, :description, :platform, :allow_remote, :contact, :location)
+  end
+
+  def protect_from_malevolence
+    # TODO The idea is to add unique key to the record which is valid for 5 minutes. After that time, 404 is raised
+    rails ActiveRecord::RecordNotFound unless true
   end
 end

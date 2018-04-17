@@ -4,6 +4,30 @@ RSpec.describe JobListingsController, type: :controller do
   let(:valid_attributes) { attributes_for(:job_listing) }
   let(:invalid_attributes) { attributes_for(:job_listing, title: nil) }
 
+  describe "GET #index" do
+    it "returns a success response" do
+      get :index, params: {}
+      expect(response).to be_successful
+    end
+  end
+
+  describe "GET #show" do
+    context "when the listing exists" do
+      it "returns a success response" do
+        job_listing = create(:job_listing)
+        get :show, params: { id: job_listing.to_param }
+
+        expect(response).to be_successful
+      end
+    end
+
+    context "when the listing does not exist" do
+      it "returns a 404" do
+        expect { get :show, params: { id: "invalid-id" } }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}
@@ -40,7 +64,7 @@ RSpec.describe JobListingsController, type: :controller do
       it "redirects to the created job listing in preview mode" do
         post :create, params: { job_listing: valid_attributes }
 
-        expect(response).to redirect_to(listing_path(JobListing.last, preview: true))
+        expect(response).to redirect_to(job_listing_path(JobListing.last, preview: true))
       end
     end
 
@@ -75,7 +99,7 @@ RSpec.describe JobListingsController, type: :controller do
         job_listing = JobListing.create!(valid_attributes)
         put :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
 
-        expect(response).to redirect_to(listing_path(job_listing))
+        expect(response).to redirect_to(job_listing_path(job_listing))
       end
     end
 
@@ -102,7 +126,7 @@ RSpec.describe JobListingsController, type: :controller do
       job_listing = JobListing.create!(valid_attributes)
       delete :destroy, params: { id: job_listing.to_param }
 
-      expect(response).to redirect_to(listings_url)
+      expect(response).to redirect_to(job_listings_url)
     end
   end
 end

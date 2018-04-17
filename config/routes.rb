@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get "/sap", to: "listings#sap"
   get "/oracle", to: "listings#oracle"
 
-  resources :listings, path: "/", only: [:index, :show]
   resources :publications, only: [:create]
+  resources :job_listings, path: "/", only: [:index, :show]
   resources :job_listings, path: "/job-listings", only: [:new, :edit, :create, :update, :destroy]
 end
