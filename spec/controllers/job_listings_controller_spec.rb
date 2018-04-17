@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe JobListingsController, type: :controller do
-  let(:valid_attributes) { attributes_for(:job_listing) }
+  let(:valid_attributes) { attributes_for(:job_listing, platform_id: 1) }
   let(:invalid_attributes) { attributes_for(:job_listing, title: nil) }
 
   describe "GET #index" do
@@ -39,7 +39,7 @@ RSpec.describe JobListingsController, type: :controller do
   describe "GET #edit" do
     context "when the job listing exists" do
       it "returns a success response" do
-        job_listing = JobListing.create!(valid_attributes)
+        job_listing = create(:job_listing, valid_attributes)
 
         get :edit, params: { id: job_listing.slug }
         expect(response).to be_successful
@@ -79,10 +79,11 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) { attributes_for(:random_job_listing) }
+      let(:platform) { build(:platform) }
+      let(:new_attributes) { attributes_for(:random_job_listing, platform_id: platform.id) }
 
       it "updates the requested listing" do
-        job_listing = JobListing.create!(valid_attributes)
+        job_listing = create(:job_listing, valid_attributes)
         put :update, params: { id: job_listing.to_param, job_listing: new_attributes }
         job_listing.reload
 
@@ -96,7 +97,7 @@ RSpec.describe JobListingsController, type: :controller do
       end
 
       it "redirects to the listing" do
-        job_listing = JobListing.create!(valid_attributes)
+        job_listing = create(:job_listing, valid_attributes)
         put :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
 
         expect(response).to redirect_to(job_listing_path(job_listing))
@@ -105,7 +106,7 @@ RSpec.describe JobListingsController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        job_listing = JobListing.create!(valid_attributes)
+        job_listing = create(:job_listing, valid_attributes)
         put :update, params: { id: job_listing.to_param, job_listing: invalid_attributes }
 
         expect(response).to be_successful
@@ -115,7 +116,7 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested listing" do
-      job_listing = JobListing.create!(valid_attributes)
+      job_listing = create(:job_listing, valid_attributes)
 
       expect {
         delete :destroy, params: { id: job_listing.to_param }
@@ -123,7 +124,7 @@ RSpec.describe JobListingsController, type: :controller do
     end
 
     it "redirects to the listings list" do
-      job_listing = JobListing.create!(valid_attributes)
+      job_listing = create(:job_listing, valid_attributes)
       delete :destroy, params: { id: job_listing.to_param }
 
       expect(response).to redirect_to(job_listings_url)

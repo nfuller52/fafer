@@ -8,7 +8,7 @@
         <tr>
           <td><%= link_to(listing.name, job_listing_path(listing)) %></td>
           <td><%= I18n.l(listing.publish_date, format: :short_date) %></td>
-          <td><%= listing.erp %></td>
+          <td><%= listing.platform.name %></td>
         </tr>
     <% end %>
   </tbody>

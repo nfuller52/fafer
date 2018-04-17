@@ -3,7 +3,7 @@ class JobListingsController < ApplicationController
   before_action :protect_from_malevolence, only: [:edit, :update, :destroy]
 
   def index
-    @listings = JobListing.published.order(expiration_date: :desc, id: :desc)
+    @listings = JobListing.published.order(expiration_date: :desc, id: :desc).includes(:platform)
   end
 
   def show
@@ -13,7 +13,7 @@ class JobListingsController < ApplicationController
   end
 
   def new
-    @platform_name = params[:platform] if JobListing.valid_platform?(params[:platform])
+    @platform = Platform.friendly.find(params[:platform]) if params[:platform].present?
 
     if Rails.env.development?
       stubbed_attributes = {
@@ -23,11 +23,11 @@ class JobListingsController < ApplicationController
         location: "#{Faker::Address.city}, #{Faker::Address.state_abbr}",
         description: Faker::Markdown.random,
         contact: Faker::Internet.email,
-        platform: @platform_name
+        platform: @platform
       }
       @job_listing = JobListing.new(stubbed_attributes)
     else
-      @job_listing = JobListing.new(platform: @platform_name)
+      @job_listing = JobListing.new(platform: @platform)
     end
   end
 
@@ -64,7 +64,7 @@ class JobListingsController < ApplicationController
   end
 
   def job_listing_params
-    params.require(:job_listing).permit(:title, :company, :description, :platform, :allow_remote, :contact, :location)
+    params.require(:job_listing).permit(:title, :company, :description, :platform_id, :allow_remote, :contact, :location)
   end
 
   def protect_from_malevolence

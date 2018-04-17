@@ -27,7 +27,7 @@ class Seed
 
     def print_footer(title = "", time_completed)
       printed_footer = [DateTime.current.strftime("%Y%m%d%H%I%M%S"), title].join(" ") + ": seeded (#{time_completed}s)"
-      printf("== %s %s\n", printed_footer, "=" * (75 - printed_footer.length))
+      printf("== %s %s\n\n", printed_footer, "=" * (75 - printed_footer.length))
     end
 
     def print_subtitle(subtitle = "")

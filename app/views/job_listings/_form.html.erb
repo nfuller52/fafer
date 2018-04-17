@@ -21,7 +21,7 @@
   <div class="form-group row">
     <%= form.label :platform, class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= form.collection_select :platform, JobListing::PLATFORM_TITLES.map { |k, v| [k, v] }, :first, :last, { prompt: true }, class: "form-control" %>
+      <%= form.collection_select :platform_id, Platform.all, :id, :name, { prompt: true }, class: "form-control" %>
     </div>
   </div>
 

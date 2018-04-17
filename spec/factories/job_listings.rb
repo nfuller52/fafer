@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :job_listing do
     title "Accounting Professional"
-    platform "net_suite"
     allow_remote false
     location "San Francisco, CA"
     description "Job post with all sorts of stuff"
@@ -10,6 +9,7 @@ FactoryBot.define do
     contact "test@example.com"
     publish_date { Date.current - 7.days }
     expiration_date { Date.current + 23.days }
+    platform
 
     factory :not_published_job_listing do
       publish_date nil
@@ -19,7 +19,6 @@ FactoryBot.define do
 
   factory :random_job_listing, class: JobListing do
     title { Faker::Job.title }
-    platform { JobListing.platforms.keys.sample }
     allow_remote { [true, false].sample }
     location { "#{Faker::Address.city}, #{Faker::Address.state_abbr}" }
     description { Faker::Markdown.random }
@@ -27,5 +26,6 @@ FactoryBot.define do
     contact { Faker::Internet.email }
     publish_date { (Date.current.last_month...Date.current).to_a.sample }
     expiration_date { (Date.current...Date.current + 1.month).to_a.sample }
+    platform
   end
 end

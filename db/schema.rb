@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_31_181029) do
+ActiveRecord::Schema.define(version: 2018_04_17_051218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "job_listings", force: :cascade do |t|
     t.string "title", null: false
-    t.integer "platform", default: 0, null: false
     t.boolean "allow_remote", default: false, null: false
     t.string "location", null: false
     t.text "description", null: false
@@ -29,10 +28,20 @@ ActiveRecord::Schema.define(version: 2018_03_31_181029) do
     t.boolean "is_published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "platform_id"
     t.index ["allow_remote"], name: "index_job_listings_on_allow_remote"
     t.index ["expiration_date"], name: "index_job_listings_on_expiration_date"
-    t.index ["platform"], name: "index_job_listings_on_platform"
+    t.index ["platform_id"], name: "index_job_listings_on_platform_id"
     t.index ["slug"], name: "index_job_listings_on_slug"
   end
 
+  create_table "platforms", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_platforms_on_slug"
+  end
+
+  add_foreign_key "job_listings", "platforms"
 end

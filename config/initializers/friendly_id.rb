@@ -17,7 +17,7 @@ FriendlyId.defaults do |config|
   config.use :reserved
 
   config.reserved_words = %w(new edit index session login logout users admin
-    stylesheets assets javascripts images net_suite sap oracle)
+    stylesheets assets javascripts images)
 
   #  ## Friendly Finders
   #

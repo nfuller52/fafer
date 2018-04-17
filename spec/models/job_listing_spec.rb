@@ -7,12 +7,7 @@ RSpec.describe JobListing, type: :model do
     it { should validate_presence_of(:description) }
     it { should validate_presence_of(:company) }
     it { should validate_presence_of(:contact) }
-
-    describe "platform" do
-      it "should default to NetSuite" do
-        expect(described_class.new.platform).to eq("net_suite")
-      end
-    end
+    it { should validate_presence_of(:platform) }
   end
 
   describe "scopes" do
@@ -37,99 +32,7 @@ RSpec.describe JobListing, type: :model do
     end
   end
 
-  describe ".valid_platform?" do
-    let(:platform) { "net_suite" }
-
-    subject { described_class.valid_platform?(platform) }
-
-    context "when the provided platform is an available platform" do
-      describe "when the provided platform is net_suite" do
-        it "is true" do
-          expect(subject).to be_truthy
-        end
-      end
-
-      describe "when the provided platform is sap" do
-        let(:platform) { "sap" }
-
-        it "is true" do
-          expect(subject).to be_truthy
-        end
-      end
-
-      describe "when the provided platform is oracle" do
-        let(:platform) { "oracle" }
-
-        it "is true" do
-          expect(subject).to be_truthy
-        end
-      end
-    end
-
-    context "when the provided platform is not an available platform" do
-      let(:platform) { "Net Suite Forgot Me" }
-
-      it "is false" do
-        expect(subject).to be_falsey
-      end
-
-      describe "it is case sensitive" do
-        let(:platform) { "Net_Suite" }
-
-        it "is false" do
-          expect(subject).to be_falsey
-        end
-      end
-    end
-  end
-
-  describe ".default_platform" do
-    it "should be net_suite" do
-      expect(described_class.default_platform).to eq("net_suite")
-    end
-
-    it "should be the first platform defined" do
-      expect(described_class.default_platform).to eq(described_class.platforms.first[0])
-    end
-  end
-
-  describe "#erp" do
-    let(:job_listing) { described_class.new(platform: platform) }
-    let(:platform) { "net_suite" }
-
-    context "when platform is set" do
-      describe "when platform is net_suite" do
-        it "#erp is NetSuite" do
-          job_listing.platform = "net_suite"
-          expect(job_listing.erp).to eq("NetSuite")
-        end
-      end
-
-      describe "when platform is sap" do
-        it "#erp is SAP" do
-          job_listing.platform = "sap"
-          expect(job_listing.erp).to eq("SAP")
-        end
-      end
-
-      describe "when platform is oracle" do
-        it "#erp is Oracle" do
-          job_listing.platform = "oracle"
-          expect(job_listing.erp).to eq("Oracle")
-        end
-      end
-    end
-
-    context "when platform is not set" do
-      let(:platform) { nil }
-
-      it "#erp is nil" do
-        expect(job_listing.erp).to be_nil
-      end
-    end
-  end
-
-  describe "#publish" do
+  describe "#publish!" do
     context "when the record is valid" do
       let(:job_listing) { create(:job_listing, publish_date: nil, expiration_date: nil) }
 
