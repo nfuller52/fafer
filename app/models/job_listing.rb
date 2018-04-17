@@ -14,7 +14,9 @@ class JobListing < ApplicationRecord
   validates :platform, presence: true
 
   scope :published, -> do
-    where("expiration_date >= ?", Date.current).order(expiration_date: :desc, id: :desc)
+    where("expiration_date >= ?", Date.current)
+    .order(expiration_date: :desc, id: :desc)
+    .includes(:platform)
   end
 
   def name

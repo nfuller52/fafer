@@ -28,13 +28,13 @@
         <% end %>
       <% end %>
 
-      <%#= content_tag :div, class: "row platform-nav-container" do %>
-        <%# JobListing::PLATFORM_TITLES.each do |system_name, readable_name| %>
-          <%#= content_tag :div, class: "col-md text-center" do %>
-            <%#= link_to readable_name, self.public_send("#{system_name}_path"), class: "platform-nav#{current_page?(controller: "listings", action: system_name) ? " active" : ""}" %>
-          <%# end %>
-        <%# end %>
-      <%# end %>
+      <%= content_tag :div, class: "row platform-nav-container" do %>
+        <% Platform.active.each do |platform| %>
+          <%= content_tag :div, class: "col-md text-center" do %>
+            <%= link_to platform.name, platform_path(platform), class: "platform-nav#{current_page?(platform_path(platform)) ? " active" : ""}" %>
+          <% end %>
+        <% end %>
+      <% end %>
 
       <%= yield %>
     <% end %>

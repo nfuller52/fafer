@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe JobListingsController, type: :controller do
-  let(:valid_attributes) { attributes_for(:job_listing, platform_id: 1) }
+  let(:platform) { create(:platform) }
+  let(:valid_attributes) { attributes_for(:job_listing, platform_id: platform.id) }
   let(:invalid_attributes) { attributes_for(:job_listing, title: nil) }
 
   describe "GET #index" do
@@ -64,7 +65,7 @@ RSpec.describe JobListingsController, type: :controller do
       it "redirects to the created job listing in preview mode" do
         post :create, params: { job_listing: valid_attributes }
 
-        expect(response).to redirect_to(job_listing_path(JobListing.last, preview: true))
+        expect(response).to redirect_to(listing_path(JobListing.last, preview: true))
       end
     end
 
@@ -79,7 +80,7 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:platform) { build(:platform) }
+      let(:platform) { create(:platform) }
       let(:new_attributes) { attributes_for(:random_job_listing, platform_id: platform.id) }
 
       it "updates the requested listing" do
@@ -88,7 +89,7 @@ RSpec.describe JobListingsController, type: :controller do
         job_listing.reload
 
         expect(job_listing.title).to eq(new_attributes[:title])
-        expect(job_listing.platform).to eq(new_attributes[:platform])
+        expect(job_listing.platform).to eq(platform)
         expect(job_listing.allow_remote).to eq(new_attributes[:allow_remote])
         expect(job_listing.location).to eq(new_attributes[:location])
         expect(job_listing.description).to eq(new_attributes[:description])

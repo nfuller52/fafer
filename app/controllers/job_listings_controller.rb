@@ -3,7 +3,7 @@ class JobListingsController < ApplicationController
   before_action :protect_from_malevolence, only: [:edit, :update, :destroy]
 
   def index
-    @listings = JobListing.published.order(expiration_date: :desc, id: :desc).includes(:platform)
+    @listings = JobListing.published
   end
 
   def show
@@ -38,7 +38,7 @@ class JobListingsController < ApplicationController
     @job_listing = JobListing.new(job_listing_params)
 
     if @job_listing.valid? && @job_listing.save
-      redirect_to job_listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
+      redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
     else
       render :new
     end

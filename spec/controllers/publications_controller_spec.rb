@@ -16,7 +16,7 @@ RSpec.describe PublicationsController, type: :controller do
 
       it "redirects to the listing" do
         post :create, params: { id: job_listing.to_param }
-        expect(response).to redirect_to(job_listings_path)
+        expect(response).to redirect_to(platform_path(job_listing.platform))
       end
     end
 
