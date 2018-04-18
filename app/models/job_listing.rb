@@ -5,6 +5,7 @@ class JobListing < ApplicationRecord
   PUBLISH_DURATION_IN_DAYS = 30
 
   belongs_to :platform
+  has_one :order
 
   validates :title, presence: true
   validates :location, presence: true

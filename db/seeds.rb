@@ -8,6 +8,23 @@ unless Rails.env.production?
   printf("####" + (" " * padding) + "%s" + (" " * padding) + "####\n", title)
   printf(("#" * line_length) + "\n\n")
 
+  # Items
+  ######################################################
+  Seed.start("Item") do
+    Seed.step("destroy_all(:items)") { Item.destroy_all }
+
+    items = [
+      { name: "NetSuite Job Listing", price_in_cents: 501000, feature_flag: nil },
+      { name: "Oracle Job Listing", price_in_cents: 501000, feature_flag: nil },
+      { name: "SAP Job Listing", price_in_cents: 501000, feature_flag: nil },
+      { name: "Highlight Listing", price_in_cents: 27000, feature_flag: "is_highlighted" },
+      { name: "Keep At Top of the List for 5 Days", price_in_cents: 27000, feature_flag: "is_prominent" }
+    ]
+    Seed.step("create(:items) #{items.length} records") do
+      items.each { |attributes| Item.create(attributes) }
+    end
+  end
+
   # Platforms
   ######################################################
   Seed.start("Platform") do
@@ -15,8 +32,8 @@ unless Rails.env.production?
 
     platform_names = ["NetSuite", "Oracle", "SAP"]
     Seed.step("create(:platforms) #{platform_names.length} records") do
-      platform_names.each do |platform_name|
-        Platform.find_or_create_by(name: platform_name)
+      platform_names.each_with_index do |platform_name, index|
+        Platform.where(name: platform_name, item_id: index + 1).first_or_create
       end
     end
   end
