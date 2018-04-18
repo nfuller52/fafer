@@ -35,4 +35,8 @@ class JobListing < ApplicationRecord
   def published?
     publish_date.present? && expiration_date.present?
   end
+
+  def can_be_updated?
+    valid? && !published?
+  end
 end

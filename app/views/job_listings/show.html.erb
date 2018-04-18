@@ -1,16 +1,14 @@
 <% if @preview_mode %>
+  <%= render "shared/wizard_nav" %>
+
   <h1>
     Preview Mode<br>
-    <small>This listing has not been published to the public yet.</small>
+    <small>This listing has not been published to the public, yet.</small>
   </h1>
-
-  <%= form_for @listing, html: { class: "form-horizontal" }, url: publications_path(id: @listing), method: :post do |form| %>
-    <%= form.submit "Publish", class: "btn btn-primary" %>
-  <% end %>
 <% end %>
 
 <p id="notice"><%= notice %></p>
 
-<%= markdown(@listing.description) %>
+<%= markdown(@job_listing.description) %>
 
-<%= link_to 'Edit', edit_job_listing_path(@listing) if @preview_mode %>
+<%= link_to 'Edit', edit_job_listing_path(@job_listing), class: "btn btn-primary" if @preview_mode %>

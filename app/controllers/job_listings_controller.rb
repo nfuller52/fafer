@@ -7,9 +7,11 @@ class JobListingsController < ApplicationController
   end
 
   def show
-    @listing = JobListing.friendly.find(params[:id])
-
-    @preview_mode = params[:preview] == "true" && !@listing.published? ? true : false
+    if !@job_listing.published? && params[:preview] != "true"
+      raise ActiveRecord::RecordNotFound
+    else
+      @preview_mode = !@job_listing.published? && params[:preview] == "true" ? true : false
+    end
   end
 
   def new
@@ -32,6 +34,7 @@ class JobListingsController < ApplicationController
   end
 
   def edit
+    raise ActiveRecord::RecordNotFound if @job_listing.published?
   end
 
   def create
@@ -45,8 +48,8 @@ class JobListingsController < ApplicationController
   end
 
   def update
-    if @job_listing.valid? && @job_listing.update(job_listing_params)
-      redirect_to job_listing_path(@job_listing.slug), notice: "#{@job_listing.title} was updated."
+    if @job_listing.can_be_updated? && @job_listing.update(job_listing_params)
+      redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was updated."
     else
       render :edit
     end

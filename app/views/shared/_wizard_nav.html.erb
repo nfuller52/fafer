@@ -1,0 +1,5 @@
+<%= content_tag :div, class: "btn-group", role: "group", style: "display: flex; margin-top: 20px; margin-bottom: 20px" do %>
+  <%= wizard_button("1. Create Your Listing", current_page?(new_job_listing_path)) %>
+  <%= wizard_button("2. Review Listing", preview_or_edit?) %>
+  <%= wizard_button("3. Order Your Listing", @wizard_active) %>
+<% end %>

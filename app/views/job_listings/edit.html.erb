@@ -1,6 +1,5 @@
+<%= render "shared/wizard_nav" %>
+
 <h1>Editing Job Listing</h1>
 
 <%= render 'form', job_listing: @job_listing %>
-
-<%= link_to 'Show', job_listing_path(@job_listing) %> |
-<%= link_to 'Back', self.send("#{@job_listing.platform}_path") %>
