@@ -60,4 +60,33 @@ unless Rails.env.production?
       end
     end
   end
+
+  job_listings = JobListing.all
+
+  # Order
+  ######################################################
+  Seed.start("Order") do
+    Seed.step("destroy_all(:orders)") { Order.destroy_all }
+
+    Seed.step("create(:order) #{job_listings.count} records") do
+      job_listings.each do |job_listing|
+        item = job_listing.item
+        upgrade_count = (0..2).to_a.sample
+
+        built_order_items = [OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)]
+        upgrade_count.times do |i|
+          item = Item.upgrades[i]
+          built_order_items << OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)
+        end
+
+        order = Order.where(job_listing_id: job_listing.id).first_or_create do |order|
+          status = Order.statuses.keys
+          customer_email = Faker::Internet.email
+        end
+
+        order.order_items = built_order_items
+        order.update(total_in_cents: order.sub_total)
+      end
+    end
+  end
 end

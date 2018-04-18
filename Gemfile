@@ -21,6 +21,7 @@ gem "bootstrap", "~> 4.0.0"
 gem "jquery-rails"
 gem "friendly_id", "~> 5.1.0"
 gem "redcarpet", "~> 3.4.0"
+gem "valid_email2"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

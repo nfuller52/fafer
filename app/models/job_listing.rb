@@ -4,6 +4,8 @@ class JobListing < ApplicationRecord
 
   PUBLISH_DURATION_IN_DAYS = 30
 
+  delegate :item, to: :platform, allow_nil: false
+
   belongs_to :platform
   has_one :order
 
@@ -11,7 +13,7 @@ class JobListing < ApplicationRecord
   validates :location, presence: true
   validates :description, presence: true
   validates :company, presence: true
-  validates :contact, presence: true
+  validates :contact, presence: true, "valid_email_2/email": { disposable: true, disallow_subaddressing: true }
   validates :platform, presence: true
 
   scope :published, -> do
