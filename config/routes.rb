@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :job_listings, path: "/job-listings", only: [:new, :edit, :create, :update, :destroy], as: :job_listings
   resources :job_listings, path: "/", only: [:index, :show], as: :listings
+  resources :orders, only: [:new, :create]
   resources :platforms, only: [:show]
   resources :publications, only: [:create]
 end
