@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def search_engine_no_index
+    response.set_header("X-Robots-Tag:", "noindex")
+    content_for :meta_robots, "noindex"
+    content_for :meta_googlebot, "noindex"
+  end
+
   def job_post_button
     platform_slug = @platform.present? ? @platform.slug : nil
     link_to "Post A Job For Only $301", new_job_listing_path(platform: platform_slug), class: "btn btn-success btn-lg post-button"

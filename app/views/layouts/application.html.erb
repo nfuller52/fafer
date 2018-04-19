@@ -3,12 +3,13 @@
   <head>
     <title>Fafer</title>
     <%= csrf_meta_tags %>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= tag(:meta, { charset: "utf-8" }, true) %>
+    <%= tag(:meta, { "http-equiv" => "X-UA-Compatible", content: "IE=edge" }, true) %>
+    <%= tag(:meta, { name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" }, true ) %>
+    <%= tag(:meta, { name: "robots", content: content_for(:meta_robots) }, true) if content_for?(:meta_robots) %>
+    <%= tag(:meta, { name: "googlebot", content: content_for(:meta_googlebot) }, true) if content_for?(:meta_googlebot) %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
@@ -39,5 +40,7 @@
       <%= yield %>
 
     <% end %>
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
