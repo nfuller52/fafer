@@ -1,0 +1,16 @@
+<%= render "shared/wizard_nav" %>
+
+<div class="row">
+  <div class="col-sm">
+    <%= form_for(@order, html: { id: "payment-form" }) do %>
+      <%= content_tag :div, class: "form-row" do %>
+        <%= content_tag :label, for: "card-element" do %>
+          Credit or debit card
+        <% end %>
+        <%= content_tag :div, nil, id: "card-element", style: "display: block; width: 100%; height: 200px" %>
+        <%= content_tag :div, nil, id: "card-errors", style: "display: block; width: 100%; height: 200px" %>
+      <% end %>
+      <%= tag :input, { value: "Submit Payment", type: "submit", class: "btn btn-success submit" }, true %>
+    <% end %>
+  </div>
+</div>

@@ -6,5 +6,6 @@ class OrdersController < ApplicationController
   end
 
   def create
+    stripe_token = params[:stripe_token]
   end
 end

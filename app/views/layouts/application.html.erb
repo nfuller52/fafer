@@ -8,19 +8,17 @@
     <%= tag(:meta, { name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" }, true ) %>
     <%= tag(:meta, { name: "robots", content: content_for(:meta_robots) }, true) if content_for?(:meta_robots) %>
     <%= tag(:meta, { name: "googlebot", content: content_for(:meta_googlebot) }, true) if content_for?(:meta_googlebot) %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= tag(:meta, { name: "stripe-pub", content: ENV["STRIPE_PUBLIC_KEY"] }, true) %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= content_tag :script, nil, src: "https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.1.0/turbolinks.js", "data-turbolinks-track": "reload" %>
   </head>
-
   <body>
     <%= content_tag :div, class: "container" do %>
-
       <%= content_tag :div, class: "heading-title" do %>
         <%= link_to root_url do %>
           <%= content_tag :h1, "FAFER", class: "text-center" %>
         <% end %>
       <% end %>
-
       <%= content_tag :div, class: "new-listing" do %>
         <%= content_tag :div, class: "row" do %>
           <%= content_tag :div, class: "col-sm text-center" do %>
@@ -28,7 +26,6 @@
           <% end %>
         <% end %>
       <% end %>
-
       <%= content_tag :div, class: "row platform-nav-container" do %>
         <% Platform.active.each do |platform| %>
           <%= content_tag :div, class: "col-md text-center" do %>
@@ -36,11 +33,9 @@
           <% end %>
         <% end %>
       <% end %>
-
       <%= yield %>
-
     <% end %>
-
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= content_tag(:script, nil, src: ENV["STRIPE_JS_URL"]) %>
+    <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </body>
 </html>

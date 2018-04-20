@@ -13,4 +13,5 @@
 
 <%= markdown(@job_listing.description) %>
 
-<%= link_to 'Edit', edit_job_listing_path(@job_listing), class: "btn btn-primary" if @preview_mode %>
+<%= link_to "Edit", edit_job_listing_path(@job_listing), class: "btn btn-primary" if @preview_mode %>
+<%= link_to "Complete Listing", new_order_path(job_listing: @job_listing), class: "btn btn-success" if @preview_mode %>
