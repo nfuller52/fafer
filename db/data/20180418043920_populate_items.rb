@@ -11,11 +11,11 @@ class PopulateItems < ActiveRecord::Migration[5.2]
 
   def items
     [
-      { name: "NetSuite Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "Oracle Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "SAP Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "Highlight Listing", price_in_cents: 27000, feature_flag: "is_highlighted" },
-      { name: "Keep At Top of the List for 5 Days", price_in_cents: 27000, feature_flag: "is_prominent" }
+      { name: "NetSuite Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "Oracle Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "SAP Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "Highlight Listing", price_in_cents: 2700, feature_flag: "is_highlighted" },
+      { name: "Keep At Top of the List for 5 Days", price_in_cents: 2700, feature_flag: "is_prominent" }
     ]
   end
 end

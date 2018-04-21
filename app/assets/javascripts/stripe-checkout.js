@@ -1,10 +1,19 @@
 var stripe = Stripe($('meta[name="stripe-pub"]').attr("content"));
-var elements = stripe.elements();
+var elements = stripe.elements({ locale: "auto" });
 var style = {
+  iconStyle: "Solid",
   base: {
     // Add your base input styles here. For example:
-    fontSize: '16px',
+    fontSize: "16px",
     color: "#32325d",
+    fontSmoothing: "antialiased",
+    "::placeholder": {
+      color: "#fce883"
+    }
+  },
+  invalid: {
+    iconColor: "#ffc7ee",
+    color: "#ffc7ee"
   }
 };
 

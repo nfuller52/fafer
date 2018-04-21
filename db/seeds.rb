@@ -14,11 +14,11 @@ unless Rails.env.production?
     Seed.step("destroy_all(:items)") { Item.destroy_all }
 
     items = [
-      { name: "NetSuite Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "Oracle Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "SAP Job Listing", price_in_cents: 501000, feature_flag: nil },
-      { name: "Highlight Listing", price_in_cents: 27000, feature_flag: "is_highlighted" },
-      { name: "Keep At Top of the List for 5 Days", price_in_cents: 27000, feature_flag: "is_prominent" }
+      { name: "NetSuite Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "Oracle Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "SAP Job Listing", price_in_cents: 50100, feature_flag: nil },
+      { name: "Highlight Listing", price_in_cents: 2700, feature_flag: "is_highlighted" },
+      { name: "Keep At Top of the List for 5 Days", price_in_cents: 2700, feature_flag: "is_prominent" }
     ]
     Seed.step("create(:items) #{items.length} records") do
       items.each { |attributes| Item.create(attributes) }
@@ -75,7 +75,7 @@ unless Rails.env.production?
 
         built_order_items = [OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)]
         upgrade_count.times do |i|
-          item = Item.upgrades[i]
+          item = Item.upsell_items[i]
           built_order_items << OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)
         end
 
