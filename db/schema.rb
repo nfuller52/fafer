@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 2018_04_18_052503) do
     t.text "description", null: false
     t.string "slug", null: false
     t.string "company", null: false
-    t.string "contact", null: false
+    t.string "contact_email", null: false
+    t.string "contact_name", null: false
     t.date "publish_date"
     t.date "expiration_date"
     t.boolean "is_published", default: false, null: false

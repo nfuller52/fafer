@@ -53,7 +53,8 @@ unless Rails.env.production?
           job_listing.allow_remote = [true, false].sample
           job_listing.location = "#{Faker::Address.city}, #{Faker::Address.state_abbr}"
           job_listing.description = Faker::Markdown.random
-          job_listing.contact = Faker::Internet.email
+          job_listing.contact_name = Faker::Name.name
+          job_listing.contact_email = Faker::Internet.email
           job_listing.publish_date = (DateTime.current.last_month...DateTime.current).to_a.sample
           job_listing.expiration_date = job_listing.publish_date + 30.days
         end
@@ -73,15 +74,15 @@ unless Rails.env.production?
         item = job_listing.item
         upgrade_count = (0..2).to_a.sample
 
-        built_order_items = [OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)]
+        built_order_items = [OrderItem.new(item_id: item.id, price_in_cents: item.price_in_cents)]
         upgrade_count.times do |i|
           item = Item.upsell_items[i]
-          built_order_items << OrderItem.create(item_id: item.id, price_in_cents: item.price_in_cents)
+          built_order_items << OrderItem.new(item_id: item.id, price_in_cents: item.price_in_cents)
         end
 
         order = Order.where(job_listing_id: job_listing.id).first_or_create do |order|
-          status = Order.statuses.keys
-          customer_email = Faker::Internet.email
+          order.status = Order.statuses.keys.sample
+          order.customer_email = Faker::Internet.email
         end
 
         order.order_items = built_order_items

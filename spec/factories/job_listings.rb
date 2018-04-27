@@ -23,7 +23,8 @@ FactoryBot.define do
     location { "#{Faker::Address.city}, #{Faker::Address.state_abbr}" }
     description { Faker::Markdown.random }
     company { Faker::Company.name }
-    contact { Faker::Internet.email }
+    contact_name { Faker::Name.name }
+    contact_email { Faker::Internet.email }
     publish_date { (Date.current.last_month...Date.current).to_a.sample }
     expiration_date { (Date.current...Date.current + 1.month).to_a.sample }
     platform

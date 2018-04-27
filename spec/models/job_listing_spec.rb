@@ -6,7 +6,8 @@ RSpec.describe JobListing, type: :model do
     it { should validate_presence_of(:location) }
     it { should validate_presence_of(:description) }
     it { should validate_presence_of(:company) }
-    it { should validate_presence_of(:contact) }
+    it { should validate_presence_of(:contact_name) }
+    it { should validate_presence_of(:contact_email) }
     it { should validate_presence_of(:platform) }
   end
 

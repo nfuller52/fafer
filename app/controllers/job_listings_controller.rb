@@ -24,7 +24,8 @@ class JobListingsController < ApplicationController
         allow_remote: [true, false].sample,
         location: "#{Faker::Address.city}, #{Faker::Address.state_abbr}",
         description: Faker::Markdown.random,
-        contact: Faker::Internet.email,
+        contact_name: Faker::Name.name,
+        contact_email: Faker::Internet.email,
         platform: @platform
       }
       @job_listing = JobListing.new(stubbed_attributes)
@@ -67,7 +68,7 @@ class JobListingsController < ApplicationController
   end
 
   def job_listing_params
-    params.require(:job_listing).permit(:title, :company, :description, :platform_id, :allow_remote, :contact, :location)
+    params.require(:job_listing).permit(:title, :company, :description, :platform_id, :allow_remote, :contact_name, :contact_email, :location)
   end
 
   def protect_from_malevolence

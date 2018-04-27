@@ -3,13 +3,19 @@
 <div class="row">
   <div class="col-sm">
     <%= form_with(model: @order, local: true, method: :post, html: { id: "payment-form" }) do |form| %>
-      <%= form.hidden_field :slug %>
-      <% @upsell_items.each do |item| %>
-        <%= content_tag :div, class: "form-group row" do %>
-          <%= check_box_tag "order_items[#{item.id}]" %>
-          <%= content_tag :label, "#{item.name} for #{number_to_currency(item.price)}", for: item.id, class: "col-sm-8 col-form-label" %>
+      <%= hidden_field_tag :job_listing, @job_listing.to_param %>
+      <div class="form-group row">
+        <% @upsell_items.each do |item| %>
+          <div class="form-check">
+            <%= check_box_tag "addons[#{item.id}]" %>
+            <%= content_tag :label, "#{item.name} for #{number_to_currency(item.price)}", for: "addons_#{item.id}", class: "col-sm-8 col-form-label" %>
+          </div>
         <% end %>
-      <% end %>
+      </div>
+      <div class="form-group row">
+        <%= form.label :customer_email, "Payment Confirmation Email", class: "col-sm" %>
+        <%= form.text_field :customer_email, class: "col-sm form-control", value: @job_listing.contact_email %>
+      </div>
       <%= content_tag :div, class: "form-row" do %>
         <%= content_tag :label, for: "card-element" do %>
           Credit or debit card

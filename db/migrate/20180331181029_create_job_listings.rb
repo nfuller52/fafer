@@ -8,7 +8,8 @@ class CreateJobListings < ActiveRecord::Migration[5.2]
       t.text :description, null: false
       t.string :slug, null: false, index: true
       t.string :company, null: false
-      t.string :contact, null: false
+      t.string :contact_email, null: false
+      t.string :contact_name, null: false
       t.date :publish_date
       t.date :expiration_date, index: true
       t.boolean :is_published, null: false, default: false

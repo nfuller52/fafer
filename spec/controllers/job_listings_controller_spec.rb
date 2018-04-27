@@ -94,7 +94,8 @@ RSpec.describe JobListingsController, type: :controller do
         expect(job_listing.location).to eq(new_attributes[:location])
         expect(job_listing.description).to eq(new_attributes[:description])
         expect(job_listing.company).to eq(new_attributes[:company])
-        expect(job_listing.contact).to eq(new_attributes[:contact])
+        expect(job_listing.contact_name).to eq(new_attributes[:contact_name])
+        expect(job_listing.contact_email).to eq(new_attributes[:contact_email])
       end
 
       it "redirects to the listing" do

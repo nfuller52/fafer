@@ -13,7 +13,8 @@ class JobListing < ApplicationRecord
   validates :location, presence: true
   validates :description, presence: true
   validates :company, presence: true
-  validates :contact, presence: true, "valid_email_2/email": { disposable: true, disallow_subaddressing: true }
+  validates :contact_name, presence: true
+  validates :contact_email, presence: true, "valid_email_2/email": { disposable: true, disallow_subaddressing: true }
   validates :platform, presence: true
 
   scope :published, -> do
@@ -38,5 +39,15 @@ class JobListing < ApplicationRecord
 
   def can_be_updated?
     valid? && !published?
+  end
+
+  def new_order=(new_order_object)
+    return false if has_order?
+
+    order = new_order_object
+  end
+
+  def has_order?
+    !order.nil?
   end
 end
