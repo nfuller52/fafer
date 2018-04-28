@@ -6,6 +6,7 @@
   "environments": {
     "test": {
       "env": {
+        "DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL": true,
         "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1",
         "CI": "true"
       },
