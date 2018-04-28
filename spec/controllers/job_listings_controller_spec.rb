@@ -39,11 +39,21 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "GET #edit" do
     context "when the job listing exists" do
-      it "returns a success response" do
-        job_listing = create(:job_listing, valid_attributes)
+      context "when the job listing is not published" do
+        it "returns a success response" do
+          job_listing = create(:not_published_job_listing)
 
-        get :edit, params: { id: job_listing.slug }
-        expect(response).to be_successful
+          get :edit, params: { id: job_listing.slug }
+          expect(response).to be_successful
+        end
+      end
+
+      context "when the job listing is published" do
+        it "returns a 404" do
+          job_listing = create(:job_listing, valid_attributes)
+
+          expect { get :edit, params: { id: job_listing.slug } }.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
 
@@ -79,39 +89,50 @@ RSpec.describe JobListingsController, type: :controller do
   end
 
   describe "PUT #update" do
-    context "with valid params" do
-      let(:platform) { create(:platform) }
-      let(:new_attributes) { attributes_for(:random_job_listing, platform_id: platform.id) }
+    context "when the job listing is not published" do
+      let(:job_listing) { create(:not_published_job_listing, platform_id: platform.id) }
 
-      it "updates the requested listing" do
-        job_listing = create(:job_listing, valid_attributes)
-        put :update, params: { id: job_listing.to_param, job_listing: new_attributes }
-        job_listing.reload
+      context "with valid params" do
+        let(:new_attributes) { attributes_for(:random_job_listing, platform_id: platform.id, expiration_date: nil, publish_date: nil) }
 
-        expect(job_listing.title).to eq(new_attributes[:title])
-        expect(job_listing.platform).to eq(platform)
-        expect(job_listing.allow_remote).to eq(new_attributes[:allow_remote])
-        expect(job_listing.location).to eq(new_attributes[:location])
-        expect(job_listing.description).to eq(new_attributes[:description])
-        expect(job_listing.company).to eq(new_attributes[:company])
-        expect(job_listing.contact_name).to eq(new_attributes[:contact_name])
-        expect(job_listing.contact_email).to eq(new_attributes[:contact_email])
+        it "updates the requested listing" do
+          put :update, params: { id: job_listing.to_param, job_listing: new_attributes }
+          job_listing.reload
+
+          expect(job_listing.title).to eq(new_attributes[:title])
+          expect(job_listing.platform).to eq(platform)
+          expect(job_listing.allow_remote).to eq(new_attributes[:allow_remote])
+          expect(job_listing.location).to eq(new_attributes[:location])
+          expect(job_listing.description).to eq(new_attributes[:description])
+          expect(job_listing.company).to eq(new_attributes[:company])
+          expect(job_listing.contact_name).to eq(new_attributes[:contact_name])
+          expect(job_listing.contact_email).to eq(new_attributes[:contact_email])
+        end
+
+        it "redirects to the listing in preview mode" do
+          put :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
+
+          expect(response).to redirect_to(listing_path(job_listing, preview: true))
+        end
       end
 
-      it "redirects to the listing" do
-        job_listing = create(:job_listing, valid_attributes)
-        put :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'edit' template)" do
+          put :update, params: { id: job_listing.to_param, job_listing: invalid_attributes }
 
-        expect(response).to redirect_to(job_listing_path(job_listing))
+          expect(response).to be_successful
+          expect(response).to render_template("job_listings/edit")
+        end
       end
     end
 
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        job_listing = create(:job_listing, valid_attributes)
-        put :update, params: { id: job_listing.to_param, job_listing: invalid_attributes }
+    context "when the job listing is published" do
+      let(:job_listing) { create(:job_listing, platform_id: platform.id) }
 
-        expect(response).to be_successful
+      it "returns a 404" do
+        expect do
+          get :update, params: { id: job_listing.to_param, job_listing: valid_attributes }
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

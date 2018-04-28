@@ -49,7 +49,9 @@ class JobListingsController < ApplicationController
   end
 
   def update
-    if @job_listing.can_be_updated? && @job_listing.update(job_listing_params)
+    raise ActiveRecord::RecordNotFound unless @job_listing.can_be_updated?
+
+    if @job_listing.update(job_listing_params)
       redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was updated."
     else
       render :edit

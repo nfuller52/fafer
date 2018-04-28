@@ -6,7 +6,8 @@ FactoryBot.define do
     description "Job post with all sorts of stuff"
     slug "big-business-accounting-professional"
     company "Big Business"
-    contact "test@example.com"
+    contact_name "Billy Bob"
+    contact_email "test@example.com"
     publish_date { Date.current - 7.days }
     expiration_date { Date.current + 23.days }
     platform
