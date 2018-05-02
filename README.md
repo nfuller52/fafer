@@ -1,10 +1,10 @@
 ## Development setup
-#####Generate local database, run migrations, seed database
+### Generate local database, run migrations, seed database
 
 ```sh
 $ rails fafer:reset
 ```
-#####Configuration
+### Configuration
 
 Environment variables are stored in the `.env.development` file in the root of the directory.
 
@@ -14,7 +14,7 @@ Environment variables are stored in the `.env.development` file in the root of t
 $ bundle exec rspec spec/
 ```
 
-##Development process
+## Development process
 
 ### Tools
 1. RSpec
@@ -50,7 +50,7 @@ $ bundle exec rspec spec/
 7. Test all mailers; stub any model logic which is tested from within the model itself.
 8. Helpers with complex processing should be tested, but simple view helpers will be exercised through the system tests.
 
-##Deployment instructions
+## Deployment instructions
 Heroku CD will deploy the master branch.
 
 TODO: Outline process
