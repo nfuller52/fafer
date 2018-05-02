@@ -11,8 +11,9 @@ ruby_filename="coverage/codeclimate.rb.json"
 
 # run the ruby test suite
 brakeman -o brakeman.json -f codeclimate
+bundle exec rake spec
 
-./cc-test-reporter after-build --exist-code $EXIT_CODE
+./cc-test-reporter after-build --exit-code $EXIT_CODE
 
 # format ruby coverage
 ./cc-test-reporter format-coverage --output $ruby_filename
