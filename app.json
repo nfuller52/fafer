@@ -15,7 +15,8 @@
       ],
       "scripts": {
         "test-setup": "./script/ci_setup",
-        "test": "./script/ci"
+        "test": "./script/ci",
+        "spec": "bundle exec rake spec"
       }
     }
   }
