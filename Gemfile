@@ -31,7 +31,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "brakeman"
   gem "bullet"
-  gem "coveralls", require: false
   gem "faker"
 end
 
