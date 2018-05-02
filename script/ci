@@ -10,8 +10,8 @@ export CC_TEST_REPORTER_ID="4d88346ddef32a36392c7dc889d9833e01cd0873762a7882e408
 ruby_filename="coverage/codeclimate.rb.json"
 
 # run the ruby test suite
-bundle exec rake spec
 brakeman -o brakeman.json -f codeclimate
+bundle exec rake spec
 
 ./cc-test-reporter after-build --exist-code $EXIT_CODE
 
