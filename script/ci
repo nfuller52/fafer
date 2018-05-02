@@ -21,3 +21,5 @@ bundle exec rake spec
 # sum code coverage and send to codeclimate
 ./cc-test-reporter sum-coverage $ruby_filename
 ./cc-test-reporter upload-coverage
+
+exit 1
