@@ -10,4 +10,10 @@ FactoryBot.define do
     price_in_cents 27000
     feature_flag "is_highlighted"
   end
+
+  factory :random_item do
+    name { Faker::StarWars.droid }
+    price_in_cents { (1000..9999).to_a.sample }
+    feature_flag { [nil, Faker::Name.name.parameterize(separator: "_")].sample }
+  end
 end

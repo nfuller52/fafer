@@ -41,12 +41,6 @@ class JobListing < ApplicationRecord
     valid? && !published?
   end
 
-  def new_order=(new_order_object)
-    return false if has_order?
-
-    order = new_order_object
-  end
-
   def has_order?
     !order.nil?
   end

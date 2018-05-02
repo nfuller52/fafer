@@ -10,7 +10,7 @@ FactoryBot.define do
     contact_email "test@example.com"
     publish_date { Date.current - 7.days }
     expiration_date { Date.current + 23.days }
-    platform
+    association :platform, name: Faker::Company.name
 
     factory :not_published_job_listing do
       publish_date nil
