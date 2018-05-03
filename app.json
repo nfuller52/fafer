@@ -16,7 +16,10 @@
       "scripts": {
         "test-setup": "./script/ci_setup",
         "test": "./script/ci"
-      }
+      },
+      "buildpacks": [
+        { "url": "https://github.com/heroku/heroku-buildpack-google-chrome" }
+      ]
     }
   }
 }
