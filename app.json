@@ -15,9 +15,7 @@
       ],
       "buildpacks": [
         { "url": "https://github.com/heroku/heroku-buildpack-ruby" },
-        { "url": "https://github.com/gunpowderlabs/buildpack-ruby-rake-deploy-tasks" },
-        { "url": "heroku/nodejs" },
-        { "url": "https://github.com/heroku/heroku-buildpack-google-chrome" }
+        { "url": "https://github.com/heroku/heroku-buildpack-chromedriver" }
       ],
       "scripts": {
         "test": "rake fafer:ci:tests"
