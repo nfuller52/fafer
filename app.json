@@ -13,12 +13,12 @@
       "addons": [
         "heroku-postgresql"
       ],
-      "scripts": {
-        "test": "rails spec"
-      },
       "buildpacks": [
         { "url": "https://github.com/heroku/heroku-buildpack-google-chrome" }
-      ]
+      ],
+      "scripts": {
+        "test": "rake fafer:ci:tests"
+      },
     }
   }
 }
