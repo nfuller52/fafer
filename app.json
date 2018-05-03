@@ -14,8 +14,7 @@
         "heroku-postgresql"
       ],
       "scripts": {
-        "test-setup": "./script/ci_setup",
-        "test": "./script/ci"
+        "test": "bundle exec rake spec"
       },
       "buildpacks": [
         { "url": "https://github.com/heroku/heroku-buildpack-google-chrome" }
