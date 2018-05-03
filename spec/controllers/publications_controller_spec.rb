@@ -22,10 +22,10 @@ RSpec.describe PublicationsController, type: :controller do
 
     context "when the job listing can not be published" do
       it "returns a success response (i.e. to display the 'job_listings/edit' template)" do
-        allow(JobListing).to receive(:friendly).and_return(JobListing)
-        allow(JobListing).to receive(:find).and_return(build(:not_published_job_listing, title: nil))
+        job_listing.update(description: nil)
+        job_listing.reload
 
-        post :create, params: { id: "whatever" }
+        post :create, params: { id: job_listing.to_param }
 
         expect(response).to be_successful
         expect(response).to render_template("job_listings/edit")

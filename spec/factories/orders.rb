@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :order do
-    total_in_cents 500_000
-    customer_email "test@example.com"
-    association :job_listing, factory: :random_job_listing
+    total_in_cents { (10000..500_000).to_a.sample }
+    customer_email { Faker::Internet.email }
+    job_listing
   end
 end
