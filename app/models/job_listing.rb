@@ -15,7 +15,6 @@ class JobListing < ApplicationRecord
   validates :company, presence: true
   validates :contact_name, presence: true
   validates :contact_email, presence: true, "valid_email_2/email": { disposable: true, disallow_subaddressing: true }
-  validates :platform, presence: true
 
   scope :published, -> do
     where("expiration_date >= ?", Date.current)

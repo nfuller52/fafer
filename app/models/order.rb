@@ -6,7 +6,6 @@ class Order < ApplicationRecord
 
   enum status: %w(pending paid declined)
 
-  validates :job_listing, presence: true
   validates :customer_email, presence: true, "valid_email_2/email": { disposable: true, disallow_subaddressing: true }
 
   def sub_total

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe JobListingsController, type: :controller do
-  let(:platform) { create(:platform) }
+  let(:platform) { create(:platform, item: create(:item)) }
   let(:valid_attributes) { attributes_for(:job_listing, platform_id: platform.id) }
   let(:invalid_attributes) { attributes_for(:job_listing, title: nil) }
 
@@ -15,7 +15,7 @@ RSpec.describe JobListingsController, type: :controller do
   describe "GET #show" do
     context "when the listing exists" do
       it "returns a success response" do
-        job_listing = create(:job_listing)
+        job_listing = create(:job_listing, platform: platform)
         get :show, params: { id: job_listing.to_param }
 
         expect(response).to be_successful
@@ -41,7 +41,7 @@ RSpec.describe JobListingsController, type: :controller do
     context "when the job listing exists" do
       context "when the job listing is not published" do
         it "returns a success response" do
-          job_listing = create(:not_published_job_listing)
+          job_listing = create(:not_published_job_listing, platform: platform)
 
           get :edit, params: { id: job_listing.slug }
           expect(response).to be_successful

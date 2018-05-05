@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe PublicationsController, type: :controller do
   describe "POST #create" do
-    let(:job_listing) { create(:not_published_job_listing) }
+    let(:platform) { create(:platform, item: create(:item)) }
+    let(:job_listing) { create(:not_published_job_listing, platform: platform) }
 
     context "when the job list can be published" do
       it "sets the expiration date" do

@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe JobListing, type: :model do
+  let(:platform) { build(:platform, item: build(:item)) }
+
   describe "validations" do
     it "has a valid facotry" do
-      expect(build(:job_listing)).to be_valid
+      expect(build(:job_listing, platform: platform)).to be_valid
     end
 
     it { should validate_presence_of(:title) }
@@ -12,12 +14,11 @@ RSpec.describe JobListing, type: :model do
     it { should validate_presence_of(:company) }
     it { should validate_presence_of(:contact_name) }
     it { should validate_presence_of(:contact_email) }
-    it { should validate_presence_of(:platform) }
   end
 
   describe "scopes" do
     describe "#published" do
-      let(:job_listing) { create(:job_listing) }
+      let(:job_listing) { create(:job_listing, platform: platform) }
 
       subject { described_class.published }
 
@@ -28,7 +29,7 @@ RSpec.describe JobListing, type: :model do
       end
 
       context "when a job listing is not published" do
-        let(:job_listing) { create(:not_published_job_listing) }
+        let(:job_listing) { create(:not_published_job_listing, platform: platform) }
 
         it "is not included" do
           expect(subject).not_to include(job_listing)
@@ -39,7 +40,7 @@ RSpec.describe JobListing, type: :model do
 
   describe "#publish!" do
     context "when the record is valid" do
-      let(:job_listing) { create(:job_listing, publish_date: nil, expiration_date: nil) }
+      let(:job_listing) { create(:not_published_job_listing, platform: platform) }
 
       before do
         job_listing.publish!
