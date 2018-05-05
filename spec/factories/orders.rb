@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :order do
-    total_in_cents 500_000
-    customer_email "test@example.com"
+    total_in_cents { (10000..500_000).to_a.sample }
+    customer_email { Faker::Internet.email }
   end
 end

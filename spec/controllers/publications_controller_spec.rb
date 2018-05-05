@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe PublicationsController, type: :controller do
   describe "POST #create" do
     let(:platform) { create(:platform, item: create(:item)) }
-    let(:job_listing) { create(:not_published_job_listing, platform: platform) }
 
-    context "when the job list can be published" do
+    context "when the job list has not been published yet" do
+      let(:job_listing) { create(:not_published_job_listing, platform: platform) }
+
       it "sets the expiration date" do
         post :create, params: { id: job_listing.to_param }
 
@@ -21,12 +22,11 @@ RSpec.describe PublicationsController, type: :controller do
       end
     end
 
-    context "when the job listing can not be published" do
-      it "returns a success response (i.e. to display the 'job_listings/edit' template)" do
-        allow(JobListing).to receive(:friendly).and_return(JobListing)
-        allow(JobListing).to receive(:find).and_return(build(:not_published_job_listing, title: nil))
+    context "when the job listing is already published" do
+      let(:job_listing) { create(:job_listing, platform: platform) }
 
-        post :create, params: { id: "whatever" }
+      it "returns a success response (i.e. to display the 'job_listings/edit' template)" do
+        post :create, params: { id: job_listing.to_param }
 
         expect(response).to be_successful
         expect(response).to render_template("job_listings/edit")

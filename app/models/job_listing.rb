@@ -28,7 +28,7 @@ class JobListing < ApplicationRecord
   end
 
   def publish!
-    return false unless valid?
+    return false unless valid? && !published?
     update(publish_date: Date.current, expiration_date: Date.current + PUBLISH_DURATION_IN_DAYS.days)
   end
 
