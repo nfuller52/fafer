@@ -18,6 +18,10 @@ RSpec.configure do |config|
   config.before(:all, type: :system) do
     Capybara.server = :puma, { Silent: :true }
   end
+
+  config.before(:each) do
+    allow_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?) { true }
+  end
 end
 
 Shoulda::Matchers.configure do |config|

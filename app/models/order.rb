@@ -13,6 +13,6 @@ class Order < ApplicationRecord
   end
 
   def calculate_total
-    self.total_in_cents = order_items.map(&:price_in_cents).inject(0, :+)
+    self.total_in_cents = sub_total
   end
 end
