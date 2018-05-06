@@ -16,22 +16,7 @@ class JobListingsController < ApplicationController
 
   def new
     @platform = Platform.friendly.find(params[:platform]) if params[:platform].present?
-
-    if Rails.env.development?
-      stubbed_attributes = {
-        company: Faker::Company.name,
-        title: Faker::Job.title,
-        allow_remote: [true, false].sample,
-        location: "#{Faker::Address.city}, #{Faker::Address.state_abbr}",
-        description: Faker::Markdown.random,
-        contact_name: Faker::Name.name,
-        contact_email: Faker::Internet.email,
-        platform: @platform
-      }
-      @job_listing = JobListing.new(stubbed_attributes)
-    else
-      @job_listing = JobListing.new(platform: @platform)
-    end
+    @job_listing = JobListing.new(platform: @platform)
   end
 
   def edit

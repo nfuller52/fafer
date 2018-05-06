@@ -14,11 +14,32 @@ RSpec.describe JobListingsController, type: :controller do
 
   describe "GET #show" do
     context "when the listing exists" do
-      it "returns a success response" do
-        job_listing = create(:job_listing, platform: platform)
-        get :show, params: { id: job_listing.to_param }
+      context "when the job listing is published" do
+        it "returns a success response" do
+          job_listing = create(:job_listing, platform: platform)
+          get :show, params: { id: job_listing.to_param }
 
-        expect(response).to be_successful
+          expect(response).to be_successful
+        end
+      end
+
+      context "when the job listing is not published" do
+        describe "when viewed in preview mode" do
+          it "returns a success response" do
+            job_listing = create(:not_published_job_listing, platform: platform)
+            get :show, params: { id: job_listing.to_param, preview: "true" }
+
+            expect(response).to be_successful
+          end
+        end
+
+        describe "when not viewed in preview mode" do
+          it "raises a 404 error" do
+            job_listing = create(:not_published_job_listing, platform: platform)
+
+            expect { get :show, params: { id: job_listing.to_param } }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
       end
     end
 
