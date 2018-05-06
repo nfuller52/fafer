@@ -11,9 +11,6 @@ class OrdersController < ApplicationController
     @job_listing.order = Order.new(customer_email: order_params["order"]["customer_email"])
     @order.order_items << upsell_items.map { |item| OrderItem.new(item: item, order: @order, price_in_cents: item.price_in_cents) }
 
-    @order.save
-    ap @order.errors
-
     if !@job_listing.has_order? && @order.save
       respond_with(@order)
     end
