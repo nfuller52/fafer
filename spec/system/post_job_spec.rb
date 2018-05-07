@@ -54,7 +54,22 @@ RSpec.describe "post a job" do
   it "prompts the user to pay for the job listing" do
     create_a_job_listing
 
-    click_link("Complete Listing")
+    click_link "Complete Listing"
     expect(page).to have_selector("#order_customer_email[value='drmcstuffins@disney.com']")
+  end
+
+  it "allows the user to pay for services" do
+    # create_a_job_listing
+    # click_link "Complete Listing"
+    #
+    # within_frame "Secure payment input frame" do
+    #   fill_in "cardnumber", with: "4242 4242 4242 4242"
+    #   fill_in "exp-date", with: "04 / #{(Date.current.year + 2).to_s[2..4]}"
+    #   fill_in "postal", with: "95403"
+    # end
+    #
+    # click_button "Submit Payment"
+    #
+    # expect(page).to have_content("Payment Received")
   end
 end
