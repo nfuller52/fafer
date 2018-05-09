@@ -27,6 +27,8 @@ class JobListingsController < ApplicationController
     @job_listing = JobListing.new(job_listing_params)
 
     if @job_listing.valid? && @job_listing.save
+      @job_listing.create_order!
+
       redirect_to listing_path(@job_listing, preview: true), notice: "#{@job_listing.title} was created."
     else
       render :new

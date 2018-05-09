@@ -4,6 +4,8 @@ class JobListing < ApplicationRecord
 
   PUBLISH_DURATION_IN_DAYS = 30
 
+  enum status: %w(pending published expired)
+
   delegate :item, to: :platform, allow_nil: false
 
   belongs_to :platform
@@ -23,8 +25,10 @@ class JobListing < ApplicationRecord
   end
 
   def name
-    return false unless company.present? && title.present?
-    [company, title].join(' - ')
+    [
+      [:company, :title],
+      [:company, :title, :location]
+    ]
   end
 
   def publish!
@@ -42,5 +46,9 @@ class JobListing < ApplicationRecord
 
   def has_order?
     !order.nil?
+  end
+
+  def expire!
+
   end
 end
